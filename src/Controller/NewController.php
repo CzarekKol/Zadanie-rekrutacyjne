@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewController extends AbstractController
 {
     /**
-     * @Route("/",name="homepage")
+     * @Route("/", name="homepage")
      */
     public function homepage(): Response
     {
@@ -17,7 +17,7 @@ class NewController extends AbstractController
     }
 
     /**
-     * @Route("/{sraka}",name="TwigAction")
+     * @Route("/registration", name="registration")
      */
     public function TwigAction(string $sraka)
     {
