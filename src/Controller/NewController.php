@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,16 +15,38 @@ class NewController extends AbstractController
      */
     public function homepage(): Response
     {
-        return new Response('Hi!');
+        return $this->render('index.html.twig');
     }
 
     /**
      * @Route("/registration", name="registration")
      */
-    public function TwigAction(string $sraka)
+    public function registrationAction(): Response
     {
-        return $this->render('test.html.twig',[
-            'holyshit' => $sraka
+        $form = $this->createForm(UserType::class, [], [
+            'action' => 'registration',
+            'attr' => [
+                'id' => 'registrationForm'
+                ]
+            ]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+
+            $newUser = new User();
+            $newUser->setUserName($formData['userName']);
+            $newUser->getPassword($formData['password']);
+
+            $em->persist($newUser);
+            $em->flush();
+
+            return $this->redirect('homepage');
+        }
+
+        return $this->renderForm('userForm.html.twig', [
+            'form' => $form
         ]);
+
     }
 }
