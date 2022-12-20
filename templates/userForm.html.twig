@@ -1,3 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    
 {{ form_start(form)}}
 
 {{form_label(form.userName)}} <br>
@@ -10,3 +13,4 @@
 <button type='reset'> Resetuj </button>
 
 {{ form_end(form)}}
+{% endblock %}
